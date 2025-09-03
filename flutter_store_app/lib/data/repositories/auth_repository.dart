@@ -4,11 +4,15 @@ import 'package:flutter_store_app/data/models/user.dart';
 import 'package:fpdart/src/either.dart';
 
 abstract interface class AuthRepository {
-  // Future<Either<>> signin(String email, String password)();
   Future<Either<Failure, User>> signUpUsers({
     required String email,
     required String password,
     required String fullName,
+  });
+
+  Future<Either<Failure, User>> signinUsers({
+    required String email,
+    required String password,
   });
 }
 
@@ -29,6 +33,25 @@ class AuthRepositoryImpl implements AuthRepository {
         email: email,
         password: password,
         fullName: fullName,
+      );
+      if (res != null && res is User) {
+        return right(res);
+      }
+      return left(Failure(message: res.toString()));
+    } catch (e) {
+      return left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, User>> signinUsers({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final res = await _authRemoteDataSource.signinUsers(
+        email: email,
+        password: password,
       );
       if (res != null && res is User) {
         return right(res);

@@ -3,10 +3,12 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AuthCustomButtonWidget extends StatelessWidget {
   final String labelText;
+  final bool isLoading;
   final VoidCallback? onTap;
   const AuthCustomButtonWidget({
     Key? key,
     required this.labelText,
+    this.isLoading = false,
     this.onTap,
   }) : super(key: key);
 
@@ -82,15 +84,19 @@ class AuthCustomButtonWidget extends StatelessWidget {
               ),
             ),
             Center(
-              child: Text(
-                labelText,
-                style: GoogleFonts.getFont(
-                  'Lato',
-                  fontSize: 17,
-                  // fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
+              child: isLoading
+                  ? CircularProgressIndicator(
+                      color: Colors.white,
+                    )
+                  : Text(
+                      labelText,
+                      style: GoogleFonts.getFont(
+                        'Lato',
+                        fontSize: 17,
+                        // fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
             ),
           ],
         ),

@@ -8,6 +8,7 @@ class User {
   final String city;
   final String locality;
   final String password;
+  final String token;
 
   User({
     required this.id,
@@ -17,6 +18,7 @@ class User {
     required this.city,
     required this.locality,
     required this.password,
+    required this.token,
   });
 
   Map<String, dynamic> toMap() {
@@ -28,6 +30,7 @@ class User {
       'city': city,
       'locality': locality,
       'password': password,
+      'token': token,
     };
   }
 
@@ -40,6 +43,7 @@ class User {
       city: map['city'] ?? '',
       locality: map['locality'] ?? '',
       password: map['password'] ?? '',
+      token: map['token'] ?? '',
     );
   }
 
