@@ -4,7 +4,9 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const authRouter = require("./routes/auth");
-// const helloRoute = require("../routes/hello");
+const bannerRouter = require("./routes/banner")
+const categoryRouter = require("./routes/category")
+const subCategoryRouter = require("./routes/sub_category")
 
 //Define the port number the server will listen on
 const PORT = 3000;
@@ -19,6 +21,11 @@ const DB = process.env.DB_URL;
 // app.use(helloRoute);
 app.use(express.json());
 app.use(authRouter);
+app.use(bannerRouter)
+app.use(categoryRouter)
+app.use(subCategoryRouter)
+
+//connect to mongodb
 
 mongoose
   .connect(DB)
