@@ -4,6 +4,7 @@ import 'package:flutter_store_web_app/src/pages/side_bar_pages/buyers/buyers_pag
 import 'package:flutter_store_web_app/src/pages/side_bar_pages/categories/categories_page.dart';
 import 'package:flutter_store_web_app/src/pages/side_bar_pages/orders/orders_page.dart';
 import 'package:flutter_store_web_app/src/pages/side_bar_pages/products/products_page.dart';
+import 'package:flutter_store_web_app/src/pages/side_bar_pages/subcategory/subcategory_page.dart';
 import 'package:flutter_store_web_app/src/pages/side_bar_pages/upload_banners/upload_banners_page.dart';
 import 'package:flutter_store_web_app/src/pages/side_bar_pages/vendors/vendors_page.dart';
 
@@ -29,6 +30,9 @@ class MainPageViewmodel extends GetViewModelBase {
         break;
       case ProductsPage.routeName:
         selectedRoute = ProductsPage();
+        break;
+      case SubcategoryPage.routeName:
+        selectedRoute = SubcategoryPage();
         break;
       default:
         selectedRoute = VendorsPage();

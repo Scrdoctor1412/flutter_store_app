@@ -20,17 +20,31 @@ class CategoriesPageViewmodel extends GetViewModelBase {
   Uint8List? catBannerImage;
   late TextEditingController catController;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  bool isFetchingCategory = true;
+  List<Category> categories = [];
 
   @override
   void onInit() {
     super.onInit();
     catController = TextEditingController();
+    initData();
   }
 
   @override
   void dispose() {
     catController.dispose();
     super.dispose();
+  }
+
+  void initData() async {
+    try {
+      categories = await fetchCategories();
+    } catch (e) {
+      debugPrint('Failed to fetch categories: $e');
+    } finally {
+      isFetchingCategory = false;
+      update();
+    }
   }
 
   void pickCatImage() async {
@@ -100,11 +114,21 @@ class CategoriesPageViewmodel extends GetViewModelBase {
       );
 
       var res = await apiCategory.addNewCategory(category);
-
+      categories.add(res);
+      update();
       debugPrint(catImageResponse.secureUrl);
       debugPrint(catImageBannerResponse.secureUrl);
     } catch (e) {
       debugPrint(e.toString());
     }
+  }
+
+  Future<List<Category>> fetchCategories() async {
+    List<Category> categories = [];
+    final res = await apiCategory.getAllCategories();
+    if (res.isNotEmpty) {
+      categories = res.map((e) => e).toList();
+    }
+    return categories;
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_store_web_app/src/pages/side_bar_pages/buyers/buyers_pag
 import 'package:flutter_store_web_app/src/pages/side_bar_pages/categories/categories_page.dart';
 import 'package:flutter_store_web_app/src/pages/side_bar_pages/orders/orders_page.dart';
 import 'package:flutter_store_web_app/src/pages/side_bar_pages/products/products_page.dart';
+import 'package:flutter_store_web_app/src/pages/side_bar_pages/subcategory/subcategory_page.dart';
 import 'package:flutter_store_web_app/src/pages/side_bar_pages/upload_banners/upload_banners_page.dart';
 import 'package:flutter_store_web_app/src/pages/side_bar_pages/vendors/vendors_page.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
@@ -20,32 +21,37 @@ class AppRouter {
     GetPage(
       name: RoutePaths.buyersPageRoute,
       page: () => const BuyersPage(),
-      binding: BuyerPageBinding(),
+      // binding: BuyerPageBinding(),
     ),
     GetPage(
       name: RoutePaths.categoriesPageRoute,
       page: () => const CategoriesPage(),
-      binding: CategoriesPageBinding(),
+      // binding: CategoriesPageBinding(),
     ),
     GetPage(
       name: RoutePaths.ordersPageRoute,
       page: () => const OrdersPage(),
-      binding: OrderPageBinding(),
+      // binding: OrderPageBinding(),
     ),
     GetPage(
       name: RoutePaths.productsPageRoute,
       page: () => const ProductsPage(),
-      binding: ProductsPageBinding(),
+      // binding: ProductsPageBinding(),
     ),
     GetPage(
       name: RoutePaths.uploadBannersPageRoute,
       page: () => const UploadBannersPage(),
-      binding: UploadBannersPageBinding(),
+      // binding: UploadBannersPageBinding(),
     ),
     GetPage(
       name: RoutePaths.vendorsPageRoute,
       page: () => const VendorsPage(),
-      binding: VendorsPageBinding(),
+      // binding: VendorsPageBinding(),
+    ),
+    GetPage(
+      name: RoutePaths.subCategoryPageRoute,
+      page: () => const SubcategoryPage(),
+      // binding: VendorsPageBinding(),
     ),
   ];
 }

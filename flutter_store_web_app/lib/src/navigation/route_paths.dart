@@ -8,4 +8,5 @@ class RoutePaths {
   static const String productsPageRoute = ProductsPage.routeName;
   static const String uploadBannersPageRoute = UploadBannersPage.routeName;
   static const String vendorsPageRoute = VendorsPage.routeName;
+  static const String subCategoryPageRoute = SubcategoryPage.routeName;
 }

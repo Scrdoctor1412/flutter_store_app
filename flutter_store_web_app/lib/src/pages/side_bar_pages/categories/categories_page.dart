@@ -12,100 +12,143 @@ class CategoriesPage extends GetView<CategoriesPageViewmodel> {
   @override
   Widget build(BuildContext context) {
     controller.context = context;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Text(
-            'Categories',
-            style: TextStyle(
-              fontSize: 36,
-              fontWeight: FontWeight.bold,
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Text(
+              'Categories',
+              style: TextStyle(
+                fontSize: 36,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        ),
-        const Divider(),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Form(
-            key: controller.formKey,
+          const Divider(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Form(
+              key: controller.formKey,
+              child: Row(
+                children: [
+                  GetBuilder<CategoriesPageViewmodel>(
+                    id: CatGetBuilderId.categoriesImageBlock,
+                    builder: (controller) {
+                      return CategoriesImageBlockWidget(
+                        onTapUploadImage: () => controller.pickCatImage(),
+                        imageBytes: controller.catImage,
+                      );
+                    },
+                  ),
+                  const SizedBox(
+                    width: 50,
+                  ),
+                  SizedBox(
+                    width: 200,
+                    // height: 60,
+                    child: TextFormField(
+                      controller: controller.catController,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Enter category name";
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        hintText: "Enter category Name",
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 16,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text('Cancel'),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      controller.onSaveCategory();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                    ),
+                    child: Text(
+                      'Save',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const Divider(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Row(
               children: [
                 GetBuilder<CategoriesPageViewmodel>(
-                  id: CatGetBuilderId.categoriesImageBlock,
+                  id: CatGetBuilderId.categoriesBannerImageBlock,
                   builder: (controller) {
                     return CategoriesImageBlockWidget(
-                      onTapUploadImage: () => controller.pickCatImage(),
-                      imageBytes: controller.catImage,
+                      onTapUploadImage: () => controller.pickCatBannerImage(),
+                      imageBytes: controller.catBannerImage,
+                      title: 'Category Banner',
                     );
                   },
-                ),
-                const SizedBox(
-                  width: 50,
-                ),
-                SizedBox(
-                  width: 200,
-                  // height: 60,
-                  child: TextFormField(
-                    controller: controller.catController,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Enter category name";
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      hintText: "Enter category Name",
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 16,
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text('Cancel'),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    controller.onSaveCategory();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                  ),
-                  child: Text(
-                    'Save',
-                    style: TextStyle(color: Colors.white),
-                  ),
                 ),
               ],
             ),
           ),
-        ),
-        const Divider(),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Row(
-            children: [
-              GetBuilder<CategoriesPageViewmodel>(
-                id: CatGetBuilderId.categoriesBannerImageBlock,
-                builder: (controller) {
-                  return CategoriesImageBlockWidget(
-                    onTapUploadImage: () => controller.pickCatBannerImage(),
-                    imageBytes: controller.catBannerImage,
-                    title: 'Category Banner',
-                  );
-                },
-              ),
-            ],
+          const Divider(),
+          GetBuilder<CategoriesPageViewmodel>(
+            builder: (controller) {
+              return controller.isFetchingCategory
+                  ? const CircularProgressIndicator()
+                  : controller.categories.isNotEmpty
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Wrap(
+                        children: [
+                          ...List.generate(
+                            controller.categories.length,
+                            (index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(
+                                  right: 12,
+                                ),
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      // width: 40,
+                                      height: 60,
+                                      child: Image.network(
+                                        controller.categories[index].image,
+                                        fit: BoxFit.fitHeight,
+                                      ),
+                                    ),
+                                    Text(controller.categories[index].name),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    )
+                  : Center(
+                      child: Text("No banners found"),
+                    );
+            },
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

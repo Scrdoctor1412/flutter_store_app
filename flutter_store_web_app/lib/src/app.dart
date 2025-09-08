@@ -9,6 +9,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       initialRoute: AppRouter.initial,
+      // initialBinding: ,
       getPages: AppRouter.routes,
       enableLog: true,
       debugShowCheckedModeBanner: false,

@@ -7,6 +7,8 @@ import 'package:flutter_store_web_app/src/pages/side_bar_pages/buyers/buyers_pag
 import 'package:flutter_store_web_app/src/pages/side_bar_pages/categories/categories_page_viewmodel.dart';
 import 'package:flutter_store_web_app/src/pages/side_bar_pages/orders/order_page_viewmodel.dart';
 import 'package:flutter_store_web_app/src/pages/side_bar_pages/products/products_page_viewmodel.dart';
+import 'package:flutter_store_web_app/src/pages/side_bar_pages/subcategory/subcategory_page.dart';
+import 'package:flutter_store_web_app/src/pages/side_bar_pages/subcategory/subcategory_page_viewmodel.dart';
 import 'package:flutter_store_web_app/src/pages/side_bar_pages/upload_banners/upload_banners_page_viewmodel.dart';
 import 'package:flutter_store_web_app/src/pages/side_bar_pages/vendors/vendors_page_viewmodel.dart';
 import 'package:get/get.dart';
@@ -78,6 +80,11 @@ class MainPage extends GetView<MainPageViewmodel> {
             title: "Categories",
             route: RoutePaths.categoriesPageRoute,
             icon: Icons.category,
+          ),
+          AdminMenuItem(
+            title: "Sub Categories",
+            route: RoutePaths.subCategoryPageRoute,
+            icon: Icons.category_outlined,
           ),
           AdminMenuItem(
             title: "Upload Banners",

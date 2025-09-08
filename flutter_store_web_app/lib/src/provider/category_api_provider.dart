@@ -18,8 +18,12 @@ class CategoryApiProvider extends BaseApiProvider {
 
   Future<List<Category>> getAllCategories() async {
     try {
+      List<Category> categories = [];
       final res = await get("/category");
-      return res;
+      if (res != null && res is List && res.isNotEmpty) {
+        categories = res.map((e) => Category.fromMap(e)).toList();
+      }
+      return categories;
     } on ApiException {
       rethrow;
     } catch (e) {

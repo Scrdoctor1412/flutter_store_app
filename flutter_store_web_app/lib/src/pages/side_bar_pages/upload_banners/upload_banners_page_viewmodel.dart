@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart' hide Banner;
 import 'package:flutter_store_web_app/src/core/base/base_view_model.dart';
 import 'package:flutter_store_web_app/src/core/global/global_variable.dart';
 import 'package:flutter_store_web_app/src/models/banner.dart';
+import 'package:get/get.dart';
 
 class UploadBannersPageViewmodel extends GetViewModelBase {
   Uint8List? image;
@@ -13,11 +14,21 @@ class UploadBannersPageViewmodel extends GetViewModelBase {
   bool isLoadingImage = true;
 
   @override
-  void onInit() async {
+  void onInit() {
     // TODO: implement onInit
     super.onInit();
-    banners = await fetchBanners();
-    update();
+    initData();
+  }
+
+  void initData() async {
+    try {
+      banners = await fetchBanners();
+    } catch (e) {
+      debugPrint('Failed to fetch banners: $e');
+    } finally {
+      isLoadingImage = false;
+      update();
+    }
   }
 
   void pickImage() async {
@@ -34,6 +45,7 @@ class UploadBannersPageViewmodel extends GetViewModelBase {
   void onSaveBanner() {
     if (image != null) {
       _uploadBanner(image!);
+      // initData();
     }
   }
 
@@ -51,6 +63,8 @@ class UploadBannersPageViewmodel extends GetViewModelBase {
 
       final newBanner = Banner(id: "", image: catImageResponse.secureUrl);
       final res = await apiBanners.addNewBanner(newBanner);
+      banners.add(res);
+      update();
       debugPrint(res.toString());
       debugPrint(catImageResponse.secureUrl);
     } catch (e) {
@@ -64,7 +78,6 @@ class UploadBannersPageViewmodel extends GetViewModelBase {
     if (res.isNotEmpty) {
       banners = res.map((e) => e).toList();
     }
-    isLoadingImage = false;
     return banners;
   }
 }
